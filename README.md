@@ -1,6 +1,10 @@
 # Your Project Title Here
 
-*TODO:* Write a short introduction to your project.
+In this project, we will train a model using HyperDrive to search within a space of hyperparameters for a Random Forest model. We will compare the resulting model with the best model obtained via AutoML. Instead of searching a hyperparameter space, AutoML will test a variety of models with some automatically chosen hyperparameters and see which one works best.
+
+We will be working with the Pump it Up Dataset.
+
+After we've trained the models, we will deploy the best model.
 
 ## Project Set Up and Installation
 *OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
