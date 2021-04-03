@@ -1,8 +1,8 @@
-# Your Project Title Here
+# Hyperdrive vs AutoML + Deployment
 
 In this project, we will train a model using HyperDrive to search within a space of hyperparameters for a Random Forest model. We will compare the resulting model with the best model obtained via AutoML. Instead of searching a hyperparameter space, AutoML will test a variety of models with some automatically chosen hyperparameters and see which one works best.
 
-We will be working with the Pump it Up Dataset.
+We will be working with the [Pump it Up Dataset](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/).
 
 After we've trained the models, we will deploy the best model.
 
