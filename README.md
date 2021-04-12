@@ -1,4 +1,20 @@
-# Hyperdrive vs AutoML + Deployment
+# Hyperdrive vs AutoML + Deployment in AzureML Studio
+
+## Table of Contents
+   * [Project Set Up and Installation](#Project-Set-Up-and-Installation)
+   * [Dataset](#Dataset)
+   * [Overview](#Overview)
+   * [Task](#Task)
+   * [Access](#Access)
+   * [Automated ML](#Automated-ML)
+   * [AutoML-Results](#AutoML-Results)
+   * [Hyperparameter-Tuning](#Hyperparameter-Tuning)
+   * [Hyperparameter-Tuning-Results](#Hyperparameter-Tuning-Results)
+   * [Model Deployment](#Model-Deployment)
+   * [Screen Recording](#Screen-Recording)
+   * [Future Work](#Future-Work)
+
+
 
 In this project, we will train a model using HyperDrive to search within a space of hyperparameters for a Random Forest model. We will compare the resulting model with the best model obtained via AutoML. Instead of searching a hyperparameter space, AutoML will test a variety of models with some automatically chosen hyperparameters and see which one works best.
 
@@ -45,6 +61,3 @@ After we've trained the models, we will deploy the best model.
 - A working model
 - Demo of the deployed  model
 - Demo of a sample request sent to the endpoint and its response
-
-## Standout Suggestions
-*TODO (Optional):* This is where you can provide information about any standout suggestions that you have attempted.
