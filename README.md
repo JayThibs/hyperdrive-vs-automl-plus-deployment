@@ -12,7 +12,7 @@
    * [Hyperparameter-Tuning-Results](#Hyperparameter-Tuning-Results)
    * [Model Deployment](#Model-Deployment)
    * [Screen Recording](#Screen-Recording)
-   * [Future Work](#Future-Work)
+   * [Extra Notes](#Extra-Notes)
 
 
 
@@ -85,7 +85,7 @@ The summary of the dataset from the DriveData website is the following:
 
 We will be using most of the features in this dataset. However, since there are some features with useless information for prediction or simply too many classes, we will remove some of the following classes during preprocessing:
 
->'id','amount_tsh',  'num_private', 'quantity', 
+>'id', 'amount_tsh',  'num_private', 'quantity', 
 'quality_group', 'source_type', 'payment', 
 'waterpoint_type_group', 'extraction_type_group', 
 'wpt_name', 'subvillage', 'scheme_name', 'funder', 
