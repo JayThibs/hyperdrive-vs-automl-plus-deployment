@@ -24,7 +24,93 @@ After we've trained the models, we will deploy the model that performs the best 
 
 ## Project Set Up and Installation
 
-To use this repository, you must import the dataset in AzureML Studio in Datasets, and then import the code in the Notebooks section.
+To use this repository, you must import the dataset in AzureML Studio in Datasets, and then import the code in the Notebooks section. Go to [Access](#Access) for help on how to import the dataset.
+
+Load the Notebooks page and load the coad from this repository. Click Create and load the folder.
+
+![import_code_repo.png](./imgs/import_code_repo.png)
+
+## Dataset
+
+### Overview
+
+The dataset we will be working with is the [Pump it Up Dataset](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/) from DrivenData.org. The purpose of the dataset is the following:
+
+A preview of the [dataset](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/Pump-it-Up-dataset.csv):
+
+![Pump-it-Up-dataset.png](./imgs/Pump-it-Up-dataset.png)
+
+We can see here that there is a class imbalance in the dataset's target variable (especially for the "functional needs repair" label):
+
+![class_imbalance_pump_it_up.png](./imgs/class_imbalance_pump_it_up.png)
+
+These are the features of the dataset:
+
+
+    amount_tsh - Total static head (amount water available to waterpoint)
+    date_recorded - The date the row was entered
+    funder - Who funded the well
+    gps_height - Altitude of the well
+    installer - Organization that installed the well
+    longitude - GPS coordinate
+    latitude - GPS coordinate
+    wpt_name - Name of the waterpoint if there is one
+    num_private -
+    basin - Geographic water basin
+    subvillage - Geographic location
+    region - Geographic location
+    region_code - Geographic location (coded)
+    district_code - Geographic location (coded)
+    lga - Geographic location
+    ward - Geographic location
+    population - Population around the well
+    public_meeting - True/False
+    recorded_by - Group entering this row of data
+    scheme_management - Who operates the waterpoint
+    scheme_name - Who operates the waterpoint
+    permit - If the waterpoint is permitted
+    construction_year - Year the waterpoint was constructed
+    extraction_type - The kind of extraction the waterpoint uses
+    extraction_type_group - The kind of extraction the waterpoint uses
+    extraction_type_class - The kind of extraction the waterpoint uses
+    management - How the waterpoint is managed
+    management_group - How the waterpoint is managed
+    payment - What the water costs
+    payment_type - What the water costs
+    water_quality - The quality of the water
+    quality_group - The quality of the water
+    quantity - The quantity of water
+    quantity_group - The quantity of water
+    source - The source of the water
+    source_type - The source of the water
+    source_class - The source of the water
+    waterpoint_type - The kind of waterpoint
+    waterpoint_type_group - The kind of waterpoint
+
+
+We will be using most of the features in this dataset. However, since there are some features with useless information for prediction or simply too many classes, we will remove some of the following classes during preprocessing:
+
+>'id', 'amount_tsh',  'num_private', 'quantity', 
+'quality_group', 'source_type', 'payment', 
+'waterpoint_type_group', 'extraction_type_group', 
+'wpt_name', 'subvillage', 'scheme_name', 'funder', 
+'installer', 'recorded_by', 'ward'
+
+### Task
+
+The goal of the dataset is to predict which water pumps are non-functional or need some repair. We will be using this dataset to practice preprocessing data and comparing Automated ML with HyperDrive (hyperparameter search).
+
+We decided to mesure performance on the Recall Score Micro metric because our dataset is imbalanced and we want to make sure we choose a metric where we do not miss any of the True Positives (non-functioning water pumps) since it is worse to miss a non-functioning water pump than a functioning water pump.
+
+The summary of the dataset from the DriveData website is the following:
+
+> Can you predict which water pumps are faulty?
+
+> Using data from Taarifa and the Tanzanian Ministry of Water, can you predict which pumps are functional, which need some repairs, and which don't work at all? This is an intermediate-level practice competition. Predict one of these three classes based on a number of variables about what kind of pump is operating, when it was installed, and how it is managed. A smart understanding of which waterpoints will fail can improve maintenance operations and ensure that clean, potable water is available to communities across Tanzania.
+
+### Access
+
+The *slightly* modified dataset is available [here](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/Pump-it-Up-dataset.csv) in this repository.
 
 To load a dataset in AzureML Studio, you first must follow these steps:
 
@@ -56,43 +142,6 @@ Make sure to check that all the columns have the correct type. We don't change a
 Click next and your dataset will be loaded into AzureML Studio!
 
 ![import_dataset_8.png](./imgs/import_dataset_8.png)
-
-Lastly, we go to the Notebooks page and load the coad from this repository. Click Create and load the folder.
-
-![import_code_repo.png](./imgs/import_code_repo.png)
-
-## Dataset
-
-### Overview
-
-The dataset we will be working with is the [Pump it Up Dataset](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/) from DrivenData.org. The purpose of the dataset is the following:
-
-A preview of the [dataset](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/Pump-it-Up-dataset.csv):
-
-![Pump-it-Up-dataset.png](./imgs/Pump-it-Up-dataset.png)
-
-### Task
-
-The goal of the dataset is to predict which water pumps are non-functional or need some repair. We will be using this dataset to practice preprocessing data and comparing Automated ML with HyperDrive (hyperparameter search).
-
-We decided to mesure performance on the Recall Score Micro metric because our dataset is imbalanced and we want to make sure we choose a metric where we do not miss any of the True Positives (non-functioning water pumps) since it is worse to miss a non-functioning water pump than a functioning water pump.
-
-The summary of the dataset from the DriveData website is the following:
-
-> Can you predict which water pumps are faulty?
-
-> Using data from Taarifa and the Tanzanian Ministry of Water, can you predict which pumps are functional, which need some repairs, and which don't work at all? This is an intermediate-level practice competition. Predict one of these three classes based on a number of variables about what kind of pump is operating, when it was installed, and how it is managed. A smart understanding of which waterpoints will fail can improve maintenance operations and ensure that clean, potable water is available to communities across Tanzania.
-
-We will be using most of the features in this dataset. However, since there are some features with useless information for prediction or simply too many classes, we will remove some of the following classes during preprocessing:
-
->'id', 'amount_tsh',  'num_private', 'quantity', 
-'quality_group', 'source_type', 'payment', 
-'waterpoint_type_group', 'extraction_type_group', 
-'wpt_name', 'subvillage', 'scheme_name', 'funder', 
-'installer', 'recorded_by', 'ward'
-
-### Access
-*TODO*: Explain how you are accessing the data in your workspace.
 
 ## Automated ML
 *TODO*: Give an overview of the `automl` settings and configuration you used for this experiment
