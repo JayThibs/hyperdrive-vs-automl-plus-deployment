@@ -12,7 +12,7 @@
    * [Hyperparameter-Tuning-Results](#Hyperparameter-Tuning-Results)
    * [Model Deployment](#Model-Deployment)
    * [Screen Recording](#Screen-Recording)
-   * [Extra Notes](#Extra-Notes)
+   * [Useful Notes](#Useful-Notes)
 
 
 
@@ -187,7 +187,7 @@ We used the following setting with the Automated ML approach:
 - Demo of the deployed  model
 - Demo of a sample request sent to the endpoint and its response
 
-## Extra Notes
+## Useful Notes
 
 - AutoML only works for a subset of primary metrics (AUC weighted, Accuracy, Norm macro recall, Average precision score weighted, Precision score weighted). The primary metric we wanted, `recall_score_micro`, was not an option. Therefore, we needed to choose `norm_macro_recall` for the primary metric and then replace the "best" model with the model that performed the best on `recall_score_micro`.
 - AutoML does not work with multi-label classification problems (where multiple labels can be predicted for a given input). I wanted to use deep learning on a multi-label classification problem and compare it to AutoML, but I had to settle for a multi-class classification problem (only one label can be predicted) because of AutoML.
