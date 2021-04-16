@@ -24,7 +24,7 @@ After we've trained the models, we will deploy the model that performs the best 
 
 ## Project Set Up and Installation
 
-To use this repository, you must import the dataset in AzureML Studio in Datasets, and then import the code in the Notebooks section. Go to [Access](#Access) for help on how to import the dataset.
+To use this repository, you must import the dataset in AzureML Studio in Datasets, and then import the code in the Notebooks section. Go to [Access](#Access) for help on how to import the dataset in Azure (since we decided to do it manually on the Datasets page in AzureML Studio).
 
 Load the Notebooks page and load the coad from this repository. Click Create and load the folder.
 
@@ -182,10 +182,7 @@ We used the following setting with the Automated ML approach:
 
 
 ## Screen Recording
-*TODO* Provide a link to a screen recording of the project in action. Remember that the screencast should demonstrate:
-- A working model
-- Demo of the deployed  model
-- Demo of a sample request sent to the endpoint and its response
+[Here's a link to a Screen Recording describing the project.](https://www.youtube.com/watch?v=7mbPALOMnzk)
 
 ## Useful Notes
 
