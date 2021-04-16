@@ -15,7 +15,6 @@
    * [Useful Notes](#Useful-Notes)
 
 
-
 In this project, we will train a model using HyperDrive to search within a space of hyperparameters for a Random Forest model. We will compare the resulting model with the best model obtained via AutoML. Instead of searching a hyperparameter space, AutoML will test a variety of models with some automatically chosen hyperparameters and see which one works best.
 
 We will be working with the [Pump it Up Dataset](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/). We've modified the dataset so that it works better in Azure (we concatenated `y_test` to `X_test`).
@@ -154,7 +153,7 @@ We used the following setting with the Automated ML approach:
     featurization = 'auto'
 
 
-### Results
+### AutoML Results
 *TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
 
 
@@ -163,11 +162,11 @@ We used the following setting with the Automated ML approach:
 
 
 
-## Hyperparameter Tuning
+## Hyperparameter Tuning with HyperDrive
 *TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
 
 
-### Results
+### Hyperparameter Tuning Results
 *TODO*: What are the results you got with your model? What were the parameters of the model? How could you have improved it?
 
 
