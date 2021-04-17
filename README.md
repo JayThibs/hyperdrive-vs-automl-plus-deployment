@@ -7,9 +7,7 @@
    * [Task](#Task)
    * [Access](#Access)
    * [Automated ML](#Automated-ML)
-   * [Automated ML Results](#AutoML-Results)
    * [Hyperparameter Tuning with HyperDrive](#Hyperparameter-Tuning-with-HyperDrive)
-   * [Hyperparameter Tuning Results](#Hyperparameter-Tuning-Results)
    * [Model Deployment](#Model-Deployment)
    * [Screen Recording](#Screen-Recording)
    * [Useful Notes](#Useful-Notes)
@@ -217,6 +215,8 @@ And now, as we can see the model endpoint is healthy/active:
 Now that the model is deployed, we can send a request to the model endpoint to get back the prediction results. Before that, it's important to register the testing data (`x_new`) so that we can send an example to the endpoint.
 
 ![imgs/automl_endpoint_request_response.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_endpoint_request_response.png)
+
+As we can see, the deployment worked and we were able to get a prediction back!
 
 I also enabled Applications Insight, where we can have a look of the at requests to the endpoint:
 
