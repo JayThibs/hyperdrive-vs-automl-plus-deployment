@@ -235,3 +235,4 @@ I also enabled Applications Insight, where we can have a look of the at requests
 ## References
 
 - Some of the preprocessing functions used in this project (with many modifications) come from the following repository: https://github.com/zlatankr/Projects/tree/master/Tanzania.
+- I also used some of the helpful advice on deployment found here: https://dev.to/ambarishg/azure-ml-aks-and-a-bit-of-mlops-2gj7.
