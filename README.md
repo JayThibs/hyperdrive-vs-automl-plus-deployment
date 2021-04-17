@@ -11,6 +11,7 @@
    * [Model Deployment](#Model-Deployment)
    * [Screen Recording](#Screen-Recording)
    * [Useful Notes](#Useful-Notes)
+   * [References](#References)
 
 
 In this project, we will train a model using HyperDrive to search within a space of hyperparameters for a Random Forest model. We will compare the resulting model with the best model obtained via AutoML. Instead of searching a hyperparameter space, AutoML will test a variety of models with some automatically chosen hyperparameters and see which one works best.
@@ -230,3 +231,7 @@ I also enabled Applications Insight, where we can have a look of the at requests
 - AutoML only works for a subset of primary metrics (AUC weighted, Accuracy, Norm macro recall, Average precision score weighted, Precision score weighted). The primary metric we wanted, `recall_score_micro`, was not an option. Therefore, we needed to choose `norm_macro_recall` for the primary metric and then replace the "best" model with the model that performed the best on `recall_score_micro`.
 - AutoML does not work with multi-label classification problems (where multiple labels can be predicted for a given input). I wanted to use deep learning on a multi-label classification problem and compare it to AutoML, but I had to settle for a multi-class classification problem (only one label can be predicted) because of AutoML.
 - When training data is registered in TabularDatasetFactory, the column headers can change as a result. This happened to me. All periods (“.”) were replaced with underscores (“_”). Therefore, I needed to fix this issue in `X_test`.
+
+## References
+
+- Some of the preprocessing functions used in this project (with many modifications) come from the following repository: https://github.com/zlatankr/Projects/tree/master/Tanzania.
