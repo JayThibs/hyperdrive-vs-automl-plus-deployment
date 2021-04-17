@@ -25,9 +25,9 @@ Note: A Colab version of the project (minus the deployment) can be found [here](
 
 ## Project Set Up and Installation
 
-To use this repository, you must import the dataset in AzureML Studio in Datasets, and then import the code in the Notebooks section. Go to [Access](#Access) for help on how to import the dataset in Azure (since we decided to do it manually on the Datasets page in AzureML Studio).
+To use this repository, all you need to do is download the code repository and load it into the Notebooks page of AzureML Studio. Afterwards, you can simply run either the [HyperDrive Notebook](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/hyperparameter_tuning.ipynb) or the [AutoML (plus deployment) Notebook](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/automl.ipynb).
 
-Load the Notebooks page and load the coad from this repository. Click Create and load the folder.
+Load the Notebooks page and load the code from this repository. Click Create and load the folder.
 
 ![import_code_repo.png](./imgs/import_code_repo.png)
 
@@ -111,38 +111,24 @@ The summary of the dataset from the DriveData website is the following:
 
 ### Access
 
-The *slightly* modified dataset is available [here](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/Pump-it-Up-dataset.csv) in this repository.
+The dataset is loaded in the notebooks with the following line of code:
 
-To load a dataset in AzureML Studio, you first must follow these steps:
+    from azureml.core import Workspace, Dataset
+    
+    ws = run.experiment.workspace
 
-1. Go to the Datasets page.
+    key = 'Pump-it-Up-dataset'
 
-![import_dataset_1.png](./imgs/import_dataset_1.png)
+    if key in ws.datasets.keys():
+          dataset = ws.datasets[key]
+          print('dataset found!')
 
-2. Click on Create dataset and the appropriate drop-down option. In our case, we're loading the dataset locally. The dataset (which was modified from the DrivenData competition) can be found [here](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/Pump-it-Up-dataset.csv).
+    else:
+          url = 'https://raw.githubusercontent.com/JayThibs/hyperdrive-vs-automl-plus-deployment/main/Pump-it-Up-dataset.csv'
+          dataset = Dataset.Tabular.from_delimited_files(url)
+          datatset = dataset.register(ws, key)
 
-![import_dataset_2.png](./imgs/import_dataset_2.png)
-
-You will then be asked to give your dataset a name and specify the dataset type. Our dataset is a tabular dataset. Afterwards, click next.
-
-![import_dataset_3.png](./imgs/import_dataset_3.png)
-
-Now, we import the dataset with the Browse button and AzureML Studio will make sure there is no issue with the dataset.
-
-![import_dataset_4.png](./imgs/import_dataset_4.png)
-![import_dataset_5.png](./imgs/import_dataset_5.png)
-
-We will now make sure that dataset is being loaded with the correct encoding, delimiters, etc. For our case, we change the Column Headers so that it uses the headers that came with the file (instead of putting the headers as a first row).
-
-![import_dataset_6.png](./imgs/import_dataset_6.png)
-
-Make sure to check that all the columns have the correct type. We don't change anything here.
-
-![import_dataset_7.png](./imgs/import_dataset_7.png)
-
-Click next and your dataset will be loaded into AzureML Studio!
-
-![import_dataset_8.png](./imgs/import_dataset_8.png)
+    dataset.to_pandas_dataframe()
 
 ## Automated ML
 
@@ -158,27 +144,57 @@ We used the following setting with the Automated ML approach:
 ### Automated ML Results
 *TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
 
+As we can see in the screenshot below, we grabbed the model that performed the best on `recall_score_micro` (instead of the primary metric).
 
+![imgs/automl_models_recall_score_micro.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_models_recall_score_micro.png)
 
 *TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+
+Here are the Run Details of the AutoML run:
+
+![imgs/automl_run_details.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_run_details.png)
 
 ## Hyperparameter Tuning with HyperDrive
 *TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
 
+For this tabular dataset, we've decided to use a Random Forest algorithm since it performs great for these types of problems and doesn't require too much modifications.
+
+With HyperDrive, we used Bayesian Search Optimization to find the best hyperparameters for the Random Forest model. Here's the hyperparameter space we decided to search:
+
+    'max_depth': quniform(3, 12, 3), # Maximum depth of the trees, (3, 6, 9, 12)
+    'min_samples_split': choice(4, 6), # Minimum number of samples required to split
+    'n_estimators' : choice(500, 750, 1000) # Number of trees
 
 ### Hyperparameter Tuning Results
-*TODO*: What are the results you got with your model? What were the parameters of the model? How could you have improved it?
 
+In the screenshot below, we can see that our best Random Forest model with HyperDrive has a `recall_score_micro` of 0.765 and has the following hyperparameters:
 
+> max_depth = 12
+> min_samples_split = 6
+> n_estimators = 500
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
+![imgs/hyperdrive_best_rf_model.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/hyperdrive_best_rf_model.png)
 
+We can see the HyperDrive Run page here:
 
+![imgs/hyperdrive_model_page.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/hyperdrive_model_page.png)
+
+To improve model performance: I was able to achieve a higher performance by using the Colab notebook (Recall Micro with Random Forest: 0.812). This is because it was much quicker to code in Colab, even after doing my own parameter search. I was able to find the optimal hyperparameters for the random forest model much quicker. I'm sure I could have achieved similar performance with HyperDrive had I spend more time tuning the hyperparameters. But this project was more about comparing two methods of model development and deploying the best one. Though I could have saved the model.pkl of the RF model in Colab and deployed in Azure, I was more interested in deploying AutoML.
+
+In other words, the model could be improved if more time was spent on the hyperparameter search.
+
+Here are the Run Details of the HyperDrive run:
+
+![hyperdrive_run_details_and_best_model.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/hyperdrive_run_details_and_best_model.png)
+
+We can see here that HyperDrive provides some visualizations to compare all the child runs:
+
+![imgs/hyperdrive_rf_runs.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/hyperdrive_rf_runs.png)
 
 ## Model Deployment
 *TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
 
-
+Since the XGBoost AutoML model performed the best out of all the models, this is the model we chose to deploy.
 
 ## Screen Recording
 [Here's a link to a Screen Recording describing the project.](https://youtu.be/t5tNFa0WgBk)
@@ -188,4 +204,3 @@ We used the following setting with the Automated ML approach:
 - AutoML only works for a subset of primary metrics (AUC weighted, Accuracy, Norm macro recall, Average precision score weighted, Precision score weighted). The primary metric we wanted, `recall_score_micro`, was not an option. Therefore, we needed to choose `norm_macro_recall` for the primary metric and then replace the "best" model with the model that performed the best on `recall_score_micro`.
 - AutoML does not work with multi-label classification problems (where multiple labels can be predicted for a given input). I wanted to use deep learning on a multi-label classification problem and compare it to AutoML, but I had to settle for a multi-class classification problem (only one label can be predicted) because of AutoML.
 - When training data is registered in TabularDatasetFactory, the column headers can change as a result. This happened to me. All periods (“.”) were replaced with underscores (“_”). Therefore, I needed to fix this issue in `X_test`.
-- I was able to achieve a higher performance by using the Colab notebook (Recall Micro with Random Forest: 0.812). This is because it was much quicker to code in Colab, even after doing my own parameter search. I was able to find the optimal hyperparameters for the random forest model much quicker. I'm sure I could have achieved similar performance with HyperDrive had I spend more time tuning the hyperparameters. But this project was more about comparing two methods of model development and deploying the best one. Though I could have saved the model.pkl of the RF model in Colab and deployed in Azure, I was more interested in deploying AutoML.
