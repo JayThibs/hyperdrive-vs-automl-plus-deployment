@@ -140,20 +140,19 @@ We used the following setting with the Automated ML approach:
     enable_early_stopping = True
     featurization = 'auto'
 
-
 ### Automated ML Results
-*TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
 
 As we can see in the screenshot below, we grabbed the model that performed the best on `recall_score_micro` (instead of the primary metric).
 
 ![imgs/automl_models_recall_score_micro.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_models_recall_score_micro.png)
+
+We got a `recall_score_micro` of 0.7999. This was better than the result we got from the HyperDrive model. Therefore, we later chose this model for deployment.
 
 Here are the Run Details of the AutoML run:
 
 ![imgs/automl_run_details.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_run_details.png)
 
 ## Hyperparameter Tuning with HyperDrive
-*TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
 
 For this tabular dataset, we've decided to use a Random Forest algorithm since it performs great for these types of problems and doesn't require too much modifications.
 
@@ -167,9 +166,9 @@ With HyperDrive, we used Bayesian Search Optimization to find the best hyperpara
 
 In the screenshot below, we can see that our best Random Forest model with HyperDrive has a `recall_score_micro` of 0.765 and has the following hyperparameters:
 
-> max_depth = 12
-> min_samples_split = 6
-> n_estimators = 500
+    max_depth = 12
+    min_samples_split = 6
+    n_estimators = 500
 
 ![imgs/hyperdrive_best_rf_model.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/hyperdrive_best_rf_model.png)
 
@@ -196,6 +195,14 @@ Since the XGBoost AutoML model performed the best out of all the models, this is
 We make sure the register the correct model for deployment:
 
 ![imgs/automl_xgboost_registered_model.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_xgboost_registered_model.png)
+
+The deployed model makes use of score.py (created in the AutoML Notebook) to get the predictions back once we send a request to the model endpoint:
+
+![imgs/score_py.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/score_py.png)
+
+Theh, we need to create an environment file (here we used Conda) for deployment. Then we create an inference config to set up the inference environment and deployment config for the Azure Container Instance. After this, we're ready to deploy the model:
+
+![imgs/model_deployment.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/model_deployment.png)
 
 Here's how we deploy the model:
 
