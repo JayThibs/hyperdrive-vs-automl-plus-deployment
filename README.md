@@ -145,7 +145,41 @@ As we can see in the screenshot below, we grabbed the model that performed the b
 
 ![imgs/automl_models_recall_score_micro.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_models_recall_score_micro.png)
 
-We got a `recall_score_micro` of 0.7999. This was better than the result we got from the HyperDrive model. Therefore, we later chose this model for deployment.
+We got a `recall_score_micro` of 0.7999. This was better than the result we got from the HyperDrive model. Therefore, we later chose this model for deployment. Though it was not added to the model registration, we can see the Run ID the highlighted string in the above image: c21115fe-165c-45e9-83eb-82e4a3a21bbd_27.
+
+We can see here our XGBoost model with its hyperparameters:
+
+![imgs/automl_xgboost_best_model_hyperparameter.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_xgboost_best_model_hyperparameter.png)
+
+For a more clean view:
+
+    base_score=0.5, 
+    booster='gbtree', 
+    colsample_bylevel=1,                    
+    colsample_bynode=1, 
+    colsample_bytree=0.6, 
+    eta=0.3, 
+    gamma=0,
+    learning_rate=0.1, 
+    max_delta_step=0, 
+    max_depth=9,
+    max_leaves=63, 
+    min_child_weight=1, 
+    missing=nan,
+    n_estimators=100, 
+    n_jobs=1, 
+    nthread=None,
+    objective='multi:softprob', 
+    random_state=0,
+    reg_alpha=0.20833333333333334, 
+    reg_lambda=1.9791666666666667,
+    scale_pos_weight=1, 
+    seed=None, 
+    silent=None, 
+    subsample=1,
+    tree_method='auto', 
+    verbose=-10, 
+    verbosity=0
 
 Here are the Run Details of the AutoML run:
 
@@ -214,6 +248,16 @@ And now, as we can see the model endpoint is healthy/active:
 ![imgs/automl_pump_it_up_deployed_service_endpoint.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_pump_it_up_deployed_service_endpoint.png)
 
 Now that the model is deployed, we can send a request to the model endpoint to get back the prediction results. Before that, it's important to register the testing data (`x_new`) so that we can send an example to the endpoint.
+
+To query the model's endpoint, data (`x_new`) needs to be send to it in the JSON format. In `score.py`, the model is initialized with `joblib.load`. Afterwards, the function run(data) is called to load the sent data with `json.loads`, make the prediction with the model, and then the model prediction is sent back to us.
+
+To send the request to the model's endpoint, wee need to send an HTTP POST request and get back the reponse with:
+
+    reponse = requests.post(url = endpoint, data = input_data, headers = request_headers)
+    
+Note: `endpoint = service.scoring_uri`
+
+Screenshots below show a demonstration of sample data response from the deployed model.
 
 ![imgs/automl_endpoint_request_response.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_endpoint_request_response.png)
 
