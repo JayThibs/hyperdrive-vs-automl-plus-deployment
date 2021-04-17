@@ -181,7 +181,7 @@ We used the following setting with the Automated ML approach:
 
 
 ## Screen Recording
-[Here's a link to a Screen Recording describing the project.](https://www.youtube.com/watch?v=7mbPALOMnzk)
+[Here's a link to a Screen Recording describing the project.](https://youtu.be/t5tNFa0WgBk)
 
 ## Useful Notes
 
