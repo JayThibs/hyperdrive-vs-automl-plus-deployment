@@ -7,9 +7,9 @@
    * [Task](#Task)
    * [Access](#Access)
    * [Automated ML](#Automated-ML)
-   * [AutoML-Results](#AutoML-Results)
-   * [Hyperparameter-Tuning](#Hyperparameter-Tuning)
-   * [Hyperparameter-Tuning-Results](#Hyperparameter-Tuning-Results)
+   * [Automated ML Results](#AutoML-Results)
+   * [Hyperparameter Tuning with HyperDrive](#Hyperparameter-Tuning-with-HyperDrive)
+   * [Hyperparameter Tuning Results](#Hyperparameter-Tuning-Results)
    * [Model Deployment](#Model-Deployment)
    * [Screen Recording](#Screen-Recording)
    * [Useful Notes](#Useful-Notes)
@@ -20,6 +20,8 @@ In this project, we will train a model using HyperDrive to search within a space
 We will be working with the [Pump it Up Dataset](https://www.drivendata.org/competitions/7/pump-it-up-data-mining-the-water-table/page/23/). We've modified the dataset so that it works better in Azure (we concatenated `y_test` to `X_test`).
 
 After we've trained the models, we will deploy the model that performs the best on `recall_score_micro`.
+
+Note: A Colab version of the project (minus the deployment) can be found [here](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/Tanzania_Competition_Colab_Version.ipynb). The Colab version was created for data exploration and testing before working in AzureML Studio.
 
 ## Project Set Up and Installation
 
@@ -153,14 +155,12 @@ We used the following setting with the Automated ML approach:
     featurization = 'auto'
 
 
-### AutoML Results
+### Automated ML Results
 *TODO*: What are the results you got with your automated ML model? What were the parameters of the model? How could you have improved it?
 
 
 
 *TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
-
-
 
 ## Hyperparameter Tuning with HyperDrive
 *TODO*: What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
