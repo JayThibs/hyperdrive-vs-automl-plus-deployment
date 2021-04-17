@@ -148,8 +148,6 @@ As we can see in the screenshot below, we grabbed the model that performed the b
 
 ![imgs/automl_models_recall_score_micro.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_models_recall_score_micro.png)
 
-*TODO* Remeber to provide screenshots of the `RunDetails` widget as well as a screenshot of the best model trained with it's parameters.
-
 Here are the Run Details of the AutoML run:
 
 ![imgs/automl_run_details.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_run_details.png)
@@ -192,9 +190,28 @@ We can see here that HyperDrive provides some visualizations to compare all the 
 ![imgs/hyperdrive_rf_runs.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/hyperdrive_rf_runs.png)
 
 ## Model Deployment
-*TODO*: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
 
 Since the XGBoost AutoML model performed the best out of all the models, this is the model we chose to deploy.
+
+We make sure the register the correct model for deployment:
+
+![imgs/automl_xgboost_registered_model.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_xgboost_registered_model.png)
+
+Here's how we deploy the model:
+
+![imgs/automl_model_deployment.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_model_deployment.png)
+
+And now, as we can see the model endpoint is healthy/active:
+
+![imgs/automl_pump_it_up_deployed_service_endpoint.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_pump_it_up_deployed_service_endpoint.png)
+
+Now that the model is deployed, we can send a request to the model endpoint to get back the prediction results. Before that, it's important to register the testing data (`x_new`) so that we can send an example to the endpoint.
+
+![imgs/automl_endpoint_request_response.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_endpoint_request_response.png)
+
+I also enabled Applications Insight, where we can have a look of the at requests to the endpoint:
+
+![imgs/applications_insight.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/applications_insight.png)
 
 ## Screen Recording
 [Here's a link to a Screen Recording describing the project.](https://youtu.be/t5tNFa0WgBk)
