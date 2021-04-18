@@ -145,41 +145,50 @@ As we can see in the screenshot below, we grabbed the model that performed the b
 
 ![imgs/automl_models_recall_score_micro.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_models_recall_score_micro.png)
 
-We got a `recall_score_micro` of 0.7999. This was better than the result we got from the HyperDrive model. Therefore, we later chose this model for deployment. Though it was not added to the model registration, we can see the Run ID the highlighted string in the above image: c21115fe-165c-45e9-83eb-82e4a3a21bbd_27.
+We got a `recall_score_micro` of 0.8136 on the training set (0.807 on the test set). This was better than the result we got from the HyperDrive model. Therefore, we later chose this model for deployment. Though it was not added to the model registration, we can see the Run ID the highlighted string in the above image: f3f5f564-3eb1-4c5b-bdba-049df1aa812b_33.
 
-We can see here our XGBoost model with its hyperparameters:
+We can see here our XGBoost model with its hyperparameters, as well as other relevant information like run id, type and experiment:
 
-![imgs/automl_xgboost_best_model_hyperparameter.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_xgboost_best_model_hyperparameter.png)
+![imgs/best_model_hyperparameters_exp_id_type.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/best_model_hyperparameters_exp_id_type.png)
 
-For a more clean view:
+For a more clean view of the hyperparameters:
 
     base_score=0.5, 
     booster='gbtree', 
     colsample_bylevel=1,                    
     colsample_bynode=1, 
-    colsample_bytree=0.6, 
-    eta=0.3, 
-    gamma=0,
+    colsample_bytree=1, 
+    eta=0.4, 
+    gamma=0.01,
     learning_rate=0.1, 
     max_delta_step=0, 
-    max_depth=9,
+    max_depth=7,
     max_leaves=63, 
     min_child_weight=1, 
     missing=nan,
-    n_estimators=100, 
+    n_estimators=400, 
     n_jobs=1, 
     nthread=None,
     objective='multi:softprob', 
     random_state=0,
-    reg_alpha=0.20833333333333334, 
+    reg_alpha=1.875, 
     reg_lambda=1.9791666666666667,
     scale_pos_weight=1, 
     seed=None, 
     silent=None, 
-    subsample=1,
+    subsample=0.7,
     tree_method='auto', 
     verbose=-10, 
     verbosity=0
+
+
+Now that we have our best AutoML model, we can register it for future use. In the bottom of the screenshot, we see the model name, run id, and type:
+
+![imgs/best_model_details_and_registration.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/best_model_details_and_registration.png)
+
+Here's the model page for the best model, along with all the relevant information added as tags (we also included the test set performance):
+
+![imgs/best_automl_model_page.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/best_automl_model_page.png)
 
 Here are the Run Details of the AutoML run:
 
@@ -225,11 +234,7 @@ We can see here that HyperDrive provides some visualizations to compare all the 
 
 ## Model Deployment
 
-Since the XGBoost AutoML model performed the best out of all the models, this is the model we chose to deploy.
-
-We make sure the register the correct model for deployment:
-
-![imgs/automl_xgboost_registered_model.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_xgboost_registered_model.png)
+Since the XGBoost AutoML model performed the best out of all the models, this is the model we chose to deploy. We've already registered it in AzureML.
 
 The deployed model makes use of score.py (created in the AutoML Notebook) to get the predictions back once we send a request to the model endpoint:
 
