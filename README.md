@@ -194,7 +194,7 @@ Here are the Run Details of the AutoML run:
 
 ![imgs/automl_run_details.png](https://github.com/JayThibs/hyperdrive-vs-automl-plus-deployment/blob/main/imgs/automl_run_details.png)
 
-With AutoML, we would need to do some more feature engineering to improve model performance. It's also worth mentioning that I created a test dataset of our dataset, but I only used one example in the test set for model endpoint inference. I could add more examples to the training set to improve model performance.
+We would need to do some more feature engineering to improve model performance.
 
 ## Hyperparameter Tuning with HyperDrive
 
